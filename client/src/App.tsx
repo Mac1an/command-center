@@ -27,7 +27,7 @@ function App() {
 			<div className={`h-full transition-none ${currentScene.category === 'brand' ? 'bg-gradient-to-r from-[#39FF14] to-[#00FFFF]' : 'bg-gradient-to-r from-[#00FFFF] to-[#00BFFF]'}`} style={{ width: `${progress}%` }} />
 
 			{/* Scene area */}
-			<div className="flex-1 flex items-center justify-center p-8">
+			<div key={currentScene.id} className="scene-enter flex-1 flex items-center justify-center p-8">
 				<div className="text-center">
 					<div className="font-mono text-xs text-white/20 uppercase tracking-widest mb-4">Now Showing</div>
 					<h1 className={`text-6xl font-bold mb-4 ${currentScene.category === 'brand' ? 'text-[#39FF14]' : 'text-[#00FFFF]'}`}>{currentScene.label}</h1>
