@@ -1,0 +1,11 @@
+@import 'tailwindcss';
+
+:root {
+	--color-bg: #080c10;
+	--color-cyan: #00ffff;
+	--color-lime: #39ff14;
+	--color-pink: #ff2d78;
+	--color-sky: #00bfff;
+	--color-surface: rgba(255, 255, 255, 0.03);
+	--color-border: rgba(255, 255, 255, 0.06);
+}
