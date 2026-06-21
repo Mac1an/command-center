@@ -2,6 +2,7 @@ import { useSceneRotation } from './hooks/useSceneRotation';
 import { SCENES } from './config/scenes';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+import { ProgressBar } from './components/ProgressBar';
 
 function App() {
 	const { currentScene, currentIndex, progress, isPaused, goToScene, togglePause } = useSceneRotation();
@@ -10,10 +11,7 @@ function App() {
 		<div className="min-h-screen bg-[#080C10] flex flex-col overflow-hidden">
 			<Header currentScene={currentScene} isPaused={isPaused} onTogglePause={togglePause} />
 
-			{/* Progress bar */}
-			<div className="h-0.5 bg-white/5 flex-shrink-0">
-				<div className={`h-full transition-none ${currentScene.category === 'brand' ? 'bg-gradient-to-r from-[#39FF14] to-[#00FFFF]' : 'bg-gradient-to-r from-[#00FFFF] to-[#00BFFF]'}`} style={{ width: `${progress}%` }} />
-			</div>
+			<ProgressBar progress={progress} category={currentScene.category} />
 
 			{/* Scene area */}
 			<div key={currentScene.id} className="scene-enter flex-1 flex items-center justify-center p-8">
