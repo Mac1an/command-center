@@ -15,15 +15,17 @@ export function useSceneRotation(): UseSceneRotationReturn {
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [progress, setProgress] = useState(0);
 	const [isPaused, setIsPaused] = useState(false);
-	const startTimeRef = useRef<number>(0);
 	const animFrameRef = useRef<number>(0);
+	const progressRef = useRef<number>(0);
 
 	const currentScene = SCENES[currentIndex];
 
 	const goToScene = useCallback((index: number) => {
-		setCurrentIndex(index);
+		cancelAnimationFrame(animFrameRef.current);
+		progressRef.current = 0;
 		setProgress(0);
-		startTimeRef.current = Date.now();
+		setCurrentIndex(index);
+		setIsPaused(false);
 	}, []);
 
 	const togglePause = useCallback(() => {
@@ -31,18 +33,25 @@ export function useSceneRotation(): UseSceneRotationReturn {
 	}, []);
 
 	useEffect(() => {
-		if (isPaused) return;
+		if (isPaused) {
+			cancelAnimationFrame(animFrameRef.current);
+			return;
+		}
 
-		const tick = () => {
-			const elapsed = Date.now() - startTimeRef.current;
-			const pct = Math.min(elapsed / currentScene.durationMs, 1);
-			setProgress(pct * 100);
+		const duration = currentScene.durationMs;
+		let lastTime = performance.now();
 
-			if (pct >= 1) {
-				const next = (currentIndex + 1) % SCENES.length;
-				setCurrentIndex(next);
+		const tick = (now: number) => {
+			const delta = now - lastTime;
+			lastTime = now;
+
+			progressRef.current = Math.min(progressRef.current + (delta / duration) * 100, 100);
+			setProgress(progressRef.current);
+
+			if (progressRef.current >= 100) {
+				progressRef.current = 0;
+				setCurrentIndex((i) => (i + 1) % SCENES.length);
 				setProgress(0);
-				startTimeRef.current = Date.now();
 			} else {
 				animFrameRef.current = requestAnimationFrame(tick);
 			}

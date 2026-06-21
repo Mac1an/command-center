@@ -1,6 +1,7 @@
 import { useSceneRotation } from './hooks/useSceneRotation';
 import { SCENES } from './config/scenes';
 import { Header } from './components/Header';
+import { Footer } from './components/Footer';
 
 function App() {
 	const { currentScene, currentIndex, progress, isPaused, goToScene, togglePause } = useSceneRotation();
@@ -26,14 +27,7 @@ function App() {
 				</div>
 			</div>
 
-			{/* Footer nav */}
-			<div className="flex items-center justify-center gap-2 px-8 py-4 border-t border-white/5 flex-shrink-0">
-				{SCENES.map((scene, i) => (
-					<button key={scene.id} onClick={() => goToScene(i)} className={`font-mono text-xs uppercase tracking-widest px-3 py-1.5 rounded-md border transition-all ${i === currentIndex ? (scene.category === 'brand' ? 'border-[#39FF14]/40 bg-[#39FF14]/10 text-[#39FF14]' : 'border-[#00FFFF]/40 bg-[#00FFFF]/10 text-[#00FFFF]') : 'border-white/7 text-white/20 hover:text-white/40'}`}>
-						{scene.label}
-					</button>
-				))}
-			</div>
+			<Footer scenes={SCENES} currentIndex={currentIndex} onGoToScene={goToScene} />
 		</div>
 	);
 }
