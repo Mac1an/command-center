@@ -11,15 +11,15 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/health', (req, res) => {
-	res.json({
-		status: 'ok',
-		message: 'Command Center server is running',
-		timestamp: new Date().toISOString(),
-	});
+  res.json({
+    status: 'ok',
+    message: 'Command Center server is running',
+    timestamp: new Date().toISOString(),
+  });
 });
 
 app.listen(PORT, () => {
-	console.log(`Command Center server running on port ${PORT}`);
+  console.log(`Command Center server running on port ${PORT}`);
 });
 
 export default app;
